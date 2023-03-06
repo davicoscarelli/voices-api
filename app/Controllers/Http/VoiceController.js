@@ -42,8 +42,9 @@ class VoiceController {
     console.log(high_bound[0].total)
     const voice = await Voice.find(id);
     if(voice.response_url){
-      let base64 = await StorageUser.getBase64(voice.response_url)
-      voice.base64 = base64
+      // let base64 = await StorageUser.getBase64(voice.response_url)
+      // voice.base64 = base64
+      voice.base64 = voice.response_url
     }
     return response.send(voice);
   }
@@ -104,15 +105,16 @@ class VoiceController {
     try {
       if (audio_file) {
         const audio = audio_file.audio
-        const path = Helpers.publicPath("tmp");
-        const fileName = new Date().getTime() + ".wav";
-        let base64Audio = audio.split(";base64,").pop();
-        const fileSave = `${path}/${fileName}`;
-        await fs.writeFileSync(fileSave, base64Audio, { encoding: "base64" });
-        const newPath = await StorageUser.saveVoice(loggedUser, fileName);
-        const baseUrl = Env.get("APP_URL");
-        let response_url =  `${baseUrl}/user_storage/${newPath}`;
-        voice.response_url = response_url;
+        // const path = Helpers.publicPath("tmp");
+        // const fileName = new Date().getTime() + ".wav";
+        // let base64Audio = audio.split(";base64,").pop();
+        // const fileSave = `${path}/${fileName}`;
+        // await fs.writeFileSync(fileSave, base64Audio, { encoding: "base64" });
+        // const newPath = await StorageUser.saveVoice(loggedUser, fileName);
+        // const baseUrl = Env.get("APP_URL");
+        // let response_url =  `${baseUrl}/user_storage/${newPath}`;
+        // voice.response_url = response_url;
+        voice.response_url = audio
       }
 
       const trx = await Database.beginTransaction();
