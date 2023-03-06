@@ -3,10 +3,27 @@ const Helpers = use("Helpers");
 const base = Helpers.publicPath("user_storage");
 const fs = require("fs");
 const crypto = require("crypto");
-
+const axios = require('axios');
 
 
 class StorageUser {
+
+  static getBase64 = async (url) => {
+    console.log("ENTROUU", url)
+    try {
+        var result =  await axios
+            .get(url, {
+                responseType: 'arraybuffer'
+            })
+            .then(response =>  new Buffer.from(response.data, 'binary').toString('base64'))
+
+
+        return result
+    }catch (e) {
+      console.log("AAAA",e)
+      return {error: e};
+    }
+}
   // save file
   static async saveVoice(user, file) {
     try {

@@ -37,5 +37,6 @@ Route.group(() => {
     Route.post("voices", "VoiceController.store").as("voices.store");
     Route.get("voices", "VoiceController.index").as("voices.index");
     Route.get("voices/:id", "VoiceController.show").as("voices.show");
+    Route.get("topic", "VoiceController.topic").as("voices.topic");
 
 }).prefix("v1")
